@@ -62,5 +62,3 @@ https://www.ydyno.com/archives/1219.html
 - 感谢 [d15801543974](https://github.com/d15801543974) 大佬提供的基于注解的通用查询方式
 
 #### 反馈交流
-
-- QQ交流群：891137268
