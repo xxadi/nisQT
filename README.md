@@ -60,5 +60,3 @@ https://www.ydyno.com/archives/1219.html
 - 感谢 [j.yao.SUSE](https://github.com/everhopingandwaiting) 大佬提供的匿名接口与Redis限流等功能
 
 - 感谢 [d15801543974](https://github.com/d15801543974) 大佬提供的基于注解的通用查询方式
-
-#### 反馈交流
