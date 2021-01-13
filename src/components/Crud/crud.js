@@ -125,11 +125,9 @@ function CRUD(options) {
     },
     // 刷新
     refresh() {
-
       if (!callVmHook(crud, CRUD.HOOK.beforeRefresh)) {
         return
       }
-      console.log(crud);
       return new Promise((resolve, reject) => {
         crud.loading = true
         // 请求数据
@@ -416,7 +414,7 @@ function CRUD(options) {
     resetDataStatus() {
       const dataStatus = {}
       function resetStatus(datas) {
-        console.log(datas);
+        // console.log(datas);
         datas.forEach(e => {
           dataStatus[crud.getDataId(e)] = {
             delete: 0,
