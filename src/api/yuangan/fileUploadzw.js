@@ -2,9 +2,9 @@ import request from '@/utils/request'
 import { encrypt } from '@/utils/rsaEncrypt'
 
 export function add(data) {
-  console.log(data);
+  console.log(data)
   return request({
-    url: 'api/fileUploadzw/insert',
+    url: 'api/fileUploadzw/insertFile',
     method: 'post',
     data
   })
@@ -17,27 +17,23 @@ export function del(params) {
     params
   })
 }
-export function stop(params) {
+export function stop(id) {
   return request({
-    url: 'api/fileUploadzw/stop',
-    method: 'get',
-    params
+    url: 'api/fileUploadzw/stop/' + id,
+    method: 'get'
   })
 }
-export function start(params) {
+export function start(id) {
   return request({
-    url: 'api/fileUploadzw/start',
-    method: 'get',
-    params
+    url: 'api/fileUploadzw/start/' + id,
+    method: 'get'
   })
 }
 
-
-
-export function queryAllQuestion(data) {
+export function queryFileListById(data) {
   return request({
-    url: 'api/fileUploadzw/findAllQuestion',
-    method: 'post',
+    url: 'api/fileUploadzw/findFileListById',
+    method: 'get',
     data
   })
 }
@@ -48,6 +44,12 @@ export function queryFilePersonListById(params) {
     params
   })
 }
-
-export default { add,del, stop,start,queryFilePersonListById}
+export function queryFile(params) {
+  return request({
+    url: 'api/fileUploadzw/findAllFile',
+    method: 'get',
+    params
+  })
+}
+export default { add, del, stop, start, queryFilePersonListById }
 
