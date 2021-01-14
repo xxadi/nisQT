@@ -35,6 +35,7 @@ export default {
       upload(this.imagesUploadApi, $file).then(res => {
         const data = res.data
         const url = this.baseApi + '/file/' + data.type + '/' + data.realName
+        console.log(url)
         this.$refs.md.$img2Url(pos, url)
       })
     }

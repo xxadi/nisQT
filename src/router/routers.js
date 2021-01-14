@@ -106,11 +106,24 @@ export const constantRouterMap = [
       {
         path: 'index',
         component: (resolve) => require(['@/views/fileuploadzw/fileUpload/index.vue'], resolve),
-        name: '文件上传',
-        meta: { title: '文件上传' }
+        name: '上传文件',
+        meta: { title: '上传文件' }
       }
     ]
   },
+  {
+    path: '/fileuploadzw/fileshow',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'edit',
+        component: (resolve) => require(['@/views/fileuploadzw/qtFileShow/edit.vue'], resolve),
+        name: '文章内容',
+        meta: { title: '文章内容' }
+      }
+    ]
+  }
 ]
 
 export default new Router({
