@@ -95,7 +95,7 @@
 <!--    <groupEdit ref="groupEdit" />-->
   </div>
 </template>
-<style scope>
+<style rel="stylesheet/scss" lang="scss">
 .form {
   padding: 20px;
 

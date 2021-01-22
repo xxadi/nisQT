@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import { encrypt } from '@/utils/rsaEncrypt'
 
 export function add(data) {
   console.log(data)
@@ -29,7 +28,12 @@ export function start(id) {
     method: 'get'
   })
 }
-
+export function read(id) {
+  return request({
+    url: 'api/fileUploadzw/read/' + id,
+    method: 'get'
+  })
+}
 export function queryFileListById(data) {
   return request({
     url: 'api/fileUploadzw/findFileListById',
@@ -51,5 +55,5 @@ export function queryFile(params) {
     params
   })
 }
-export default { add, del, stop, start, queryFilePersonListById }
+export default { add, del, stop, start, queryFilePersonListById ,read}
 

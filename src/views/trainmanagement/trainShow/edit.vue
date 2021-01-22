@@ -3,7 +3,7 @@
     <!--     <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="title" append-to-body width="500px" @close="cancel">-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span><b>请填写文章信息</b></span>
+        <span><b>请填写培训资料信息</b></span>
       </div>
       <el-form
         ref="ruleForm"
@@ -11,14 +11,14 @@
         :rules="rules"
         label-width="100px"
       >
-        <el-form-item label="文章名称" prop="fileName">
+        <el-form-item label="资料名称" prop="fileName" label-width="120px">
           <el-input
             v-model="ruleForm.fileName"
             style="width: 400px"
             placeholder="请输入组名称"
           />
         </el-form-item>
-        <el-form-item label="文章附件" prop="uploadMaterialFile">
+        <el-form-item label="资料附件" prop="uploadMaterialFile" label-width="120px">
           <div>
             <div class="el-upload">
               <el-upload ref="uploadMaterialFile"
@@ -46,19 +46,14 @@
             </div>
           </div>
         </el-form-item>
-        <el-form-item label="允许下载" prop="fileIsdownload">
-          <div>
-            <el-radio v-model="ruleForm.fileIsdownload" label="1">是</el-radio>
-            <el-radio v-model="ruleForm.fileIsdownload" label="0">否</el-radio>
-          </div>
+        <el-form-item label="有效阅读时间" prop="fileTime" label-width="120px">
+          <el-input
+            v-model="ruleForm.fileTime"
+            style="width: 400px"
+            placeholder="请输入有效阅读时间"
+          />(min)
         </el-form-item>
-        <el-form-item label="是否隐藏" prop="name">
-          <div>
-            <el-radio v-model="ruleForm.fileState" label="0">是</el-radio>
-            <el-radio v-model="ruleForm.fileState" label="1">否</el-radio>
-          </div>
-        </el-form-item>
-        <el-form-item label="可见人员" prop="filePathList">
+        <el-form-item label="可见人员" prop="filePathList" label-width="120px">
           <el-table
             id="elTable"
             :data="ruleForm.filePathList"
@@ -118,14 +113,14 @@
 </template>
 <script>
 import GroupA from '../../common/groupList'
-import crudgGroup, { queryGroupList } from '@/api/yuangan/fileUploadzw'
+import crudgGroup, { queryGroupList } from '@/api/yuangan/trainManager'
 import CRUD, { header, presenter } from '@crud/crud'
 import { getToken } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 export default {
   cruds() {
     return CRUD({
-      title: '文件',
+      title: '试题',
       url: 'api/quest/findAllQuestion',
       sort: ['jobSort,asc', 'id,desc'],
       crudMethod: { ...crudgGroup }
@@ -142,12 +137,13 @@ export default {
         fileState: '1',
         filePath: '',
         contentType: '',
-        fileSuffix: ''
+        fileSuffix: '',
+        fileTime:''
       },
       // 表单验证
       rules: {
         fileName: [
-          { required: true, message: '请填写文章名称', trigger: 'blur' },
+          { required: true, message: '请填写培训资料名称', trigger: 'blur' },
           {
             min: 1,
             max: 10,
@@ -158,8 +154,8 @@ export default {
         filePathList: [
           { required: true, message: '请选择人员', trigger: 'blur' }
         ],
-        fileIsdownload:[
-          { required: true, message: '请选择是否允许下载', trigger: 'blur' }
+        fileTime:[
+          { required: true, message: '请输入有效阅读时间', trigger: 'blur' }
         ],
         uploadMaterialFile:[
           { required: true,validator: this.validateFile}

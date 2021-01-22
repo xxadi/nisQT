@@ -123,6 +123,33 @@ export const constantRouterMap = [
         meta: { title: '文章内容' }
       }
     ]
+  },
+  {
+    path: '/trainmanag/qtTrainShow',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'edit',
+        component: (resolve) => require(['@/views/trainmanagement/qtTrainShow/edit.vue'], resolve),
+        name: '培训内容',
+        meta: { title: '培训内容' }
+      }
+    ]
+  }
+  ,
+  {
+    path: '/trainmanag/trainShow',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'edit',
+        component: (resolve) => require(['@/views/trainmanagement/trainShow/edit.vue'], resolve),
+        name: '培训内容',
+        meta: { title: '培训内容' }
+      }
+    ]
   }
 ]
 

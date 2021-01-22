@@ -76,14 +76,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="fileNum" label="可见人数" align="center" width="120" />
-        <el-table-column prop="questDifficulty" label="阅读人数" align="center" width="120">
+        <el-table-column prop="fileReadNum" label="阅读人数" align="center" width="120">
           <template slot-scope="scope">
-            <span v-if="scope.row.questDifficulty==='1'">一星</span>
-            <span v-else-if="scope.row.questDifficulty==='2'">二星</span>
-            <span v-else-if="scope.row.questDifficulty==='3'">三星</span>
-            <span v-else-if="scope.row.questDifficulty==='4'">四星</span>
-            <span v-else-if="scope.row.questDifficulty==='5'">五星</span>
-            <span v-else>未知</span>
+            {{scope.row.fileReadNum }} / {{scope.row.fileNum}}
           </template>
         </el-table-column>
         <el-table-column prop="fileIsdownload" label="是否允许下载" align="center" width="120">
@@ -101,7 +96,7 @@
         <!-- 操作按钮 -->
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <router-link
+            <router-link v-if="scope.row.fileState==='1'"
               :to="{ path: '/fileupload/file/index', query: { user: scope.row } }"
             >
               <el-button
@@ -195,7 +190,7 @@ export default {
   components: { pagination, rrOperation },
   cruds() {
     return CRUD({
-      title: '试题',
+      title: '文件',
       url: 'api/fileUploadzw/findAllFile',
       sort: ['jobSort,asc', 'id,desc'],
       crudMethod: { ...crudgQuestion }
@@ -203,22 +198,6 @@ export default {
   },
   mixins: [presenter(), header()],
   data() {
-    const checkReusltCorrect = (rule, value, callback) => {
-      console.log('sadadasdadasd')
-      if (this.ruleForm.questType === '1') {
-        if (this.ruleForm.correctArray.length < 2) {
-          callback(new Error('多选题至少选择两个正确选项！'))
-        } else {
-          callback()
-        }
-      } else {
-        if (this.ruleForm.questResult === undefined) {
-          callback(new Error('请选择正确选项！'))
-        } else {
-          callback()
-        }
-      }
-    }
     return {
       // 分页数据
       // 默认每页数据量
@@ -365,9 +344,6 @@ export default {
         questResult: [
           { required: true, message: '请选择正确答案', trigger: 'blur' }
         ],
-        correctArray: [
-          { required: true, validator: checkReusltCorrect, trigger: 'blur' }
-        ]
       },
       itemsTF: [
         { id: null, prefix: 'A', content: '是' },
