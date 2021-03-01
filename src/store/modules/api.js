@@ -12,6 +12,8 @@ const api = {
     imagesUploadApi: baseUrl + '/api/localStorage/pictures',
     // 试卷头像上传
     paperPicUploadApi: baseUrl + '/api/fileUploadzw/insert',
+    // 试卷头像上传
+    personInfoUploadApi: baseUrl + '/api/fileUploadzw/personImport',
     // 修改头像
     updateAvatarApi: baseUrl + '/api/users/updateAvatar',
     // 上传文件到七牛云

@@ -214,7 +214,7 @@ export default {
       const _that = this
       crudgGroup.queryFilePersonListById({ fileId: id }).then((res) => {
         console.log(res)
-        var keyMap = { userId: 'id', userName: 'name', deptcode: 'dept', professional: 'job_type' }
+        var keyMap = { userId: 'id', userName: 'name', dept: 'dept', job: 'job_type' }
         for (var i = 0; i < res.content.length; i++) {
           var obj = res.content[i]
           for (var key in obj) {

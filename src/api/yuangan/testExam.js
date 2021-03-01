@@ -4,7 +4,7 @@ import { encrypt } from '@/utils/rsaEncrypt'
 export function add(data) {
   console.log(data);
   return request({
-    url: 'api/testPaper/insert',
+    url: 'api/exam/insert',
     method: 'post',
     data
   })
@@ -12,21 +12,21 @@ export function add(data) {
 
 export function del(params) {
   return request({
-    url: 'api/testPaper/delete',
+    url: 'api/exam/delete',
     method: 'get',
     params
   })
 }
 export function stop(params) {
   return request({
-    url: 'api/testPaper/stop',
+    url: 'api/exam/stop',
     method: 'get',
     params
   })
 }
 export function start(params) {
   return request({
-    url: 'api/testPaper/start',
+    url: 'api/exam/start',
     method: 'get',
     params
   })
@@ -42,7 +42,7 @@ export function findAllPerson(data) {
 
 export function queryAllQuestion(data) {
   return request({
-    url: 'api/quest/findAllQuestion',
+    url: 'api/exam/findAllQuestion',
     method: 'get',
     data
   })
@@ -55,29 +55,13 @@ export function findAllTestPaper(data) {
     data
   })
 }
-
-export function findAllTestPaperById(id) {
-  return request({
-    url: 'api/testPaper/findAllTestPaperById/' + id,
-    method: 'get',
-  })
-}
 export function queryQuestionListById(params) {
   return request({
-    url: 'api/quest/queryQuestionListById',
+    url: 'api/exam/queryQuestionListById',
     method: 'get',
     params
   })
 }
-export function answerSubmit(data) {
-  console.log(data);
-  return request({
-    url: 'api/exam/answerSubmit',
-    method: 'post',
-    data
-  })
-}
 
-
-export default { add,del, stop,start,queryQuestionListById,findAllPerson,findAllTestPaper,findAllTestPaperById,answerSubmit}
+export default { add,del, stop,start,queryQuestionListById,findAllPerson,findAllTestPaper}
 

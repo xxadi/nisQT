@@ -338,6 +338,18 @@ function CRUD(options) {
       })
     },
     /**
+     * 通用导入
+     */
+    doinport() {
+      crud.downloadLoading = true
+      download(crud.url + '/download', crud.getQueryParams()).then(result => {
+        downloadFile(result, crud.title + '数据', 'xlsx')
+        crud.downloadLoading = false
+      }).catch(() => {
+        crud.downloadLoading = false
+      })
+    },
+    /**
      * 获取查询参数
      */
     getQueryParams: function() {

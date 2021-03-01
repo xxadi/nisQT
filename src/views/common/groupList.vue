@@ -1,10 +1,6 @@
 <template>
   <div style="height: 400px; border: 1px solid #ccc">
     <el-container>
-      <!-- <el-header>
-        <div style=" line-height: 30px;text-align: center;border-bottom:1px solid #ccc">请选择人员</div>
-      </el-header>-->
-      <el-container>
         <el-container>
           <el-aside width="60%">
             <div>
@@ -79,7 +75,7 @@
                 style="
                   display: flex;
                   align-items: center;
-                  background-color: #ccc;
+                  background-color: #F0F3F4;
                   margin-top: 5px;
                   position: relative;
                 "
@@ -106,14 +102,13 @@
           </el-container>
         </el-container>
 
-        <el-footer>
+        <el-footer style="text-align: center">
           <div style="border-bottom: 0.5px solid #ccc; margin: 3px"></div>
           <el-button size="mini" @click="sendPerson" type="primary"
             >添加</el-button
           >
-          <el-button size="mini" type="primary">取消</el-button>
+          <el-button size="mini" type="primary" @click="closeForm">取消</el-button>
         </el-footer>
-      </el-container>
     </el-container>
   </div>
 </template>
@@ -350,8 +345,11 @@ export default {
       }
     },
     icoCheckDisplay(node) {
+      console.log("icoCheckDisplay");
+      console.log(node);
       var temText = node.label;
       var temId = node.id;
+      var dept = node.dept;
       var img = document.getElementById(temId);
       if (img.style.display.match("block") == "block") {
         img.style.display = "none";
@@ -375,7 +373,7 @@ export default {
       }
 
       if (flag == 1) {
-        this.personList.push({ id: temId, name: temText });
+        this.personList.push({ id: temId, name: temText,dept:node.dept });
       }
     },
     icoCheckDisplayAll(node) {
@@ -401,7 +399,7 @@ export default {
           imgs.style.display = "none";
         }
         if (this.personList.length == 0) {
-          this.personList.push({ id: temId, name: temText });
+          this.personList.push({ id: temId, name: temText ,dept:node.dept });
         } else {
           this.personList.forEach((item, index) => {
             if (flagT) {
@@ -417,7 +415,7 @@ export default {
             }
           });
           if (flagT == true && numFlag == 1) {
-            this.personList.push({ id: temId, name: temText });
+            this.personList.push({ id: temId, name: temText ,dept:node.dept });
           }
         }
       }
@@ -476,7 +474,7 @@ export default {
       console.log(data);
     },
     handleSelect(item) {
-      var node = { label: item.value, id: item.id };
+      var node = { label: item.value, id: item.id ,dept:item.dept };
       var result = this.personList.some((tmp) => {
         if (tmp.id == item.id) {
           return true;
@@ -497,6 +495,7 @@ export default {
             this.searchList.push({
               value: data[i].children[j].label,
               id: data[i].children[j].id,
+              dept:data[i].children[j].dept
             });
           }
         }
@@ -535,6 +534,9 @@ export default {
         console.log(err.data.message)
       });
     },
+    closeForm(){
+      this.$emit("closeForm", "");
+    }
   },
   mounted: function () {
     this.friendGroupsChanged("");
@@ -547,16 +549,20 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>
 .el-header {
   height: 40px !important;
 }
 .el-aside {
   /* background-color: rgb(0, 119, 255); */
   border-right: 1px solid #ccc;
+  line-height: 40px !important;
+  background-color: #ffffff !important;
 }
 .el-footer {
-  /* background-color: rgb(136, 255, 0); */
+  height: 34px !important;
+  background-color: #ffffff !important;
+  line-height: 30px !important;
 }
 .queryInput {
   height: 30px !important;
@@ -571,5 +577,13 @@ export default {
 }
 .el-tabs el-tabs--top {
   margin: 5px !important;
+}
+.el-tabs__item{
+  width: 100px !important;
+}
+.el-main {
+  line-height: 20px !important;
+  background-color: #ffffff !important;
+  text-align: left !important;
 }
 </style>

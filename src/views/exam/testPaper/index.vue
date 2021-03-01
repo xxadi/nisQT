@@ -12,17 +12,15 @@
         </el-form-item>
         <!-- 发布状态选择栏 -->
         <el-form-item label="创建时间" >
-          <el-select v-model="query.attribute" placeholder="请选择" class="selectWid150">
-            <el-option
-              v-for="item in attribute"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.date"
+            value-format="yyyy-MM-dd"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="试卷状态">
-          <el-select v-model="query.catagory" placeholder="请选择" class="selectWid150">
+          <el-select v-model="query.state" placeholder="请选择" class="selectWid150">
             <el-option
               v-for="item in catagory"
               :key="item.value"
@@ -32,22 +30,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="创建人">
-          <el-select v-model="query.questDifficulty" placeholder="请选择" class="selectWid150">
+          <el-select v-model="query.userId" placeholder="请选择" class="selectWid150">
             <el-option
               v-for="item in level"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="试题状态">
-          <el-select v-model="query.state" placeholder="请选择" class="selectWid150">
-            <el-option
-              v-for="item in state"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.userId"
+              :label="item.nickName"
+              :value="item.userId"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -173,61 +161,42 @@
       <br />
       <br />
       <el-table :data="crud.data" border stripe size="mini" style="width: 100%">
-        <el-table-column prop="questName" label="试卷名字" align="center"></el-table-column>
-        <el-table-column prop="questType" label="创建时间" align="center" width="120">
+        <el-table-column prop="paperName" label="试卷名字" align="center"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" align="center" width="140">
           <template slot-scope="scope">
-            <span v-if="scope.row.questType==='1'">多选题</span>
-            <span v-else-if="scope.row.questType==='0'">单选题</span>
-            <span v-else-if="scope.row.questType==='2'">判断题</span>
-            <span v-else-if="scope.row.questType==='3'">填空题</span>
-            <span v-else>未知</span>
+            <span > {{ parseTime(scope.row.createTime)}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="questTitle" label="创建人" align="center" width="120">
-          <template slot-scope="scope">
-            <span v-if="scope.row.questTitle==='1'">手卫生</span>
-            <span v-else-if="scope.row.questTitle==='2'">职业暴露</span>
-            <span v-else-if="scope.row.questTitle==='3'">院感报卡</span>
-            <span v-else-if="scope.row.questTitle==='4'">多重耐药菌</span>
-            <span v-else>未知</span>
-          </template>
+        <el-table-column prop="nickName" label="创建人" align="center" width="120">
         </el-table-column>
-        <el-table-column prop="questDifficulty" label="总分值" align="center" width="120">
-          <template slot-scope="scope">
-            <span v-if="scope.row.questDifficulty==='1'">一星</span>
-            <span v-else-if="scope.row.questDifficulty==='2'">二星</span>
-            <span v-else-if="scope.row.questDifficulty==='3'">三星</span>
-            <span v-else-if="scope.row.questDifficulty==='4'">四星</span>
-            <span v-else-if="scope.row.questDifficulty==='5'">五星</span>
-            <span v-else>未知</span>
-          </template>
+        <el-table-column prop="score" label="总分值" align="center" width="120">
+           <template slot-scope="scope">
+           <span > {{ scope.row.score }}分</span>
+         </template>
         </el-table-column>
-        <el-table-column prop="unread" label="及格分数" align="center" width="120">
-          <!-- <template slot-scope="scope">
-            <span v-if="scope.row.noState===1">{{ scope.row.unread }}</span>
-          </template> -->
+        <el-table-column prop="passScore" label="及格分数" align="center" width="120">
         </el-table-column>
         <el-table-column prop="questState" label="试题状态" align="center" width="120">
           <template slot-scope="scope">
-            <span v-if="scope.row.questState==='1'" style="color: #59B949">正常</span>
-            <span v-else-if="scope.row.questState==='0'" style="color: #FF0000">停用</span>
+            <span v-if="scope.row.state==='1'" style="color: #00b7ee">显示</span>
+            <span v-else-if="scope.row.state==='0'" style="color: #FF0000">停用</span>
             <span v-else>未知</span>
           </template>
         </el-table-column>
         <!-- 操作按钮 -->
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.questState==='1'" type="text" size="small" style="color: #1900FF"
+            <el-button v-if="scope.row.state==='1'" type="text" size="small" style="color: #1900FF"
                        @click="stopUse(scope.row)">停用</el-button>
             <el-button v-else type="text" size="small" style="color: #1900FF"
-                       @click="StartUse(scope.row)">启用</el-button>
+                       @click="StartUse(scope.row)">显示</el-button>
             <el-button
               @click.native.prevent="deleteUse(scope.row)"
               type="text"
               size="small"
               style="color: #FF0000"
             >删除</el-button>
-            <el-button size="mini" @click="$router.push({path:'/exam/paper/edit',query:{id:scope.row.id}})" >编辑</el-button>
+            <el-button size="mini"   style="color: #F2B206" type="text" @click="$router.push({path:'/exam/paper/edit',query: { user: scope.row }  })" >编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -240,7 +209,7 @@
     </div>
   </div>
 </template>
-<style scope>
+<style rel="stylesheet/scss" lang="scss">
 .form {
   padding: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -282,7 +251,7 @@
 
 <script>
 import rrOperation from '@crud/RR.operation'
-import crudgQuestion,{ queryAllQuestion } from "@/api/yuangan/question";
+import crudgQuestion,{ queryAllQuestion } from "@/api/yuangan/testPaper";
 import CRUD, { presenter,header } from "@crud/crud";
 import pagination from "@crud/Pagination";
 import MyEditor from '@/components/editor/MyEditor.vue'
@@ -291,7 +260,7 @@ export default {
   cruds() {
     return CRUD({
       title: "试题",
-      url: "api/quest/findAllQuestion",
+      url: "api/testPaper/findAllTestPaper",
       sort: ["jobSort,asc", "id,desc"],
       crudMethod: { ...crudgQuestion },
     });
@@ -317,7 +286,7 @@ export default {
     return {
       // 分页数据
       //默认每页数据量
-      pageSize: 20,
+      pageSize: 10,
       //当前页码
       currentPage: 1,
       //查询的页码
@@ -386,20 +355,12 @@ export default {
       ],
       catagory: [
         {
+          value: "0",
+          label: "停用",
+        },
+        {
           value: "1",
-          label: "手卫生",
-        },
-        {
-          value: "2",
-          label: "职业暴露",
-        },
-        {
-          value: "3",
-          label: "院感报卡",
-        },
-        {
-          value: "4",
-          label: "多重耐药菌",
+          label: "显示",
         },
       ],
       level: [
@@ -478,7 +439,12 @@ export default {
     };
   },
   created() {
-    // 获取所有通知列表
+    // 获取所有人员列表
+    crudgQuestion.findAllPerson().then(res => {
+   console.log(res.content);
+   this.level = res.content
+    }).catch(() => {
+    })
   },
   methods: {
     //添加选项
@@ -486,42 +452,38 @@ export default {
       this.ruleForm.answer.push({});
     },
     stopUse(data) {
-      console.log(data.questId);
-      this.$confirm('此操作将停用' + data.questName + ', 是否继续？', '提示', {
+      console.log(data);
+      this.$confirm('此操作将停用' + data.paperName + ', 是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         crudgQuestion.stop(data).then(res => {
           this.crud.notify('停用成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
-          data.questState = '0'
+          data.state = '0'
         }).catch(() => {
-          data.questState = '0'
         })
       }).catch(() => {
-        data.questState = '0'
       })
     },
     StartUse(data) {
-      console.log(data.questId);
-      this.$confirm('此操作将启用' + data.questName + ', 是否继续？', '提示', {
+      console.log(data.id);
+      this.$confirm('此操作将启用' + data.paperName + ', 是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         crudgQuestion.start(data).then(res => {
           this.crud.notify('启用成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
-          data.questState = '1';
+          data.state = '1';
         }).catch(() => {
-          data.questState = '1'
         })
       }).catch(() => {
-        data.questState = '1'
       })
     },
     deleteUse(data) {
-      console.log(data.questId);
-      this.$confirm('此操作将删除' + data.questName + ', 是否继续？', '提示', {
+      console.log(data.id);
+      this.$confirm('此操作将删除' + data.paperName + ', 是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -753,7 +715,7 @@ export default {
     confirmForm(){
       this.dialogInputVisible = false;
       // this.ruleForm.questName =   this.ruleForm.questionContent;
-    }
+    },
   },
 };
 </script>

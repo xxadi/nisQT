@@ -150,6 +150,32 @@ export const constantRouterMap = [
         meta: { title: '培训内容' }
       }
     ]
+  } ,
+  {
+    path: '/exam/qttestpaper',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'inpaper',
+        component: (resolve) => require(['@/views/exam/testPaperQt/inPaper.vue'], resolve),
+        name: '考试',
+        meta: { title: '考试' }
+      }
+    ]
+  },
+  {
+    path: '/exam/examinat',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'edit',
+        component: (resolve) => require(['@/views/exam/examination/edit.vue'], resolve),
+        name: '编辑考试',
+        meta: { title: '编辑考试' }
+      }
+    ]
   }
 ]
 

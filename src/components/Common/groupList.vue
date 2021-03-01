@@ -1,96 +1,87 @@
 <template>
   <div style="height: 400px; border:1px solid #ccc">
-    <el-container>
-      <!-- <el-header>
-        <div style=" line-height: 30px;text-align: center;border-bottom:1px solid #ccc">请选择人员</div>
-      </el-header>-->
-      <el-container>
-        <el-container>
-          <el-aside width="60%">
-            <div>
-              <div style="display:flex;margin-top:10px;">
-                <div>
-                  <i class="el-icon-search" style="line-height:30px;margin-left:10px"></i>
-                </div>
+<!--      <div>-->
+<!--          <div width="60%" style=" border-right: 1px solid #ccc;line-height: 40px !important;">-->
+<!--            <div>-->
+<!--              <div style="display:flex;margin-top:10px;">-->
+<!--                <div>-->
+<!--                  <i class="el-icon-search" style="line-height:30px;margin-left:10px"></i>-->
+<!--                </div>-->
 
-                <el-autocomplete
-                  popper-class="my-autocomplete"
-                  v-model="state"
-                  :fetch-suggestions="querySearch"
-                  placeholder="请输入内容"
-                  @select="handleSelect"
-                >
-                  <template slot-scope="{ item }">
-                    <div class="name">{{ item.value }}</div>
-                  </template>
-                </el-autocomplete>
-              </div>
-              <div style="margin:0 10px">
-                <el-tabs v-model="activeName" @tab-click="handleClick">
-                  <el-tab-pane label="按组织架构" name="first">
-                    <el-tree
-                      :data="data"
-                      node-key="id"
-                      default-expand-all
-                      :expand-on-click-node="false"
-                      :render-content="renderContent"
-                      @node-click="append"
-                    ></el-tree>
-                  </el-tab-pane>
-                  <el-tab-pane label="按组选择" name="second">
-                    <el-tree
-                      :data="data1"
-                      default-expand-all
-                      :expand-on-click-node="false"
-                      :render-content="renderContent"
-                      @node-click="append"
-                    ></el-tree>
-                  </el-tab-pane>
-                  <el-tab-pane label="按职称选择" name="third">
-                    <el-tree :data="data2" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
-                  </el-tab-pane>
-                </el-tabs>
-              </div>
-            </div>
+<!--                <el-autocomplete-->
+<!--                  popper-class="my-autocomplete"-->
+<!--                  v-model="state"-->
+<!--                  :fetch-suggestions="querySearch"-->
+<!--                  placeholder="请输入内容"-->
+<!--                  @select="handleSelect"-->
+<!--                >-->
+<!--                  <template slot-scope="{ item }">-->
+<!--                    <div class="name">{{ item.value }}</div>-->
+<!--                  </template>-->
+<!--                </el-autocomplete>-->
+<!--              </div>-->
+<!--              <div style="margin:0 10px">-->
+<!--                <el-tabs v-model="activeName" @tab-click="handleClick">-->
+<!--                  <el-tab-pane label="按组织架构" name="first">-->
+<!--                    <el-tree-->
+<!--                      :data="data"-->
+<!--                      node-key="id"-->
+<!--                      default-expand-all-->
+<!--                      :expand-on-click-node="false"-->
+<!--                      :render-content="renderContent"-->
+<!--                      @node-click="append"-->
+<!--                    ></el-tree>-->
+<!--                  </el-tab-pane>-->
+<!--                  <el-tab-pane label="按组选择" name="second">-->
+<!--                    <el-tree-->
+<!--                      :data="data1"-->
+<!--                      default-expand-all-->
+<!--                      :expand-on-click-node="false"-->
+<!--                      :render-content="renderContent"-->
+<!--                      @node-click="append"-->
+<!--                    ></el-tree>-->
+<!--                  </el-tab-pane>-->
+<!--                  <el-tab-pane label="按职称选择" name="third">-->
+<!--                    <el-tree :data="data2" :props="defaultProps" @node-click="handleNodeClick"></el-tree>-->
+<!--                  </el-tab-pane>-->
+<!--                </el-tabs>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div style="float: left;width:100%">
-              <!-- 收信人： -->
-              <input
-                type="text"
-                name="txtName"
-                id="txtName"
-                style="width: 200px;height:250px;display:none"
-              />
-            </div>
-          </el-aside>
-          <el-container>
-            <el-main>
-              <label for>已选择的联系人</label>
-              <div
-                v-for="(item, index) in personList"
-                v-bind:key="index"
-                style="display:flex;align-items: center;    background-color: #ccc;margin-top:5px;    position: relative;"
-              >
-                <div :id="item.id" style="margin-left:20px;width:90%">{{ item.name}}</div>
-                <div>
-                  <i
-                    @click="deleteItem($event)"
-                    class="el-icon-close"
-                    style="margin-left:20px;float:right;position: absolute;z-index: 1;right: 0;top: 1px;"
-                  ></i>
-                </div>
-              </div>
-            </el-main>
-          </el-container>
-        </el-container>
+<!--            <div style="float: left;width:100%">-->
+<!--              &lt;!&ndash; 收信人： &ndash;&gt;-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                name="txtName"-->
+<!--                id="txtName"-->
+<!--                style="width: 200px;height:250px;display:none"-->
+<!--              />-->
+<!--            </div>-->
+<!--          </div>-->
 
-        <el-footer>
-          <div style="border-bottom:0.5px solid #ccc;margin:3px"></div>
-          <el-button size="mini" @click="sendPerson" type="primary">添加</el-button>
-          <el-button size="mini" type="primary">取消</el-button>
-        </el-footer>
-      </el-container>
-    </el-container>
+<!--            <div>-->
+<!--              <label for>已选择的联系人</label>-->
+<!--              <div-->
+<!--                v-for="(item, index) in personList"-->
+<!--                v-bind:key="index"-->
+<!--                style="display:flex;align-items: center;    background-color: #ccc;margin-top:5px;    position: relative;"-->
+<!--              >-->
+<!--                <div :id="item.id" style="margin-left:20px;width:90%">{{ item.name}}</div>-->
+<!--                <div>-->
+<!--                  <i-->
+<!--                    @click="deleteItem($event)"-->
+<!--                    class="el-icon-close"-->
+<!--                    style="margin-left:20px;float:right;position: absolute;z-index: 1;right: 0;top: 1px;"-->
+<!--                  ></i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--        <div>-->
+<!--          <div style="border-bottom:0.5px solid #ccc;margin:3px"></div>-->
+<!--          <el-button size="mini" @click="sendPerson" type="primary">添加</el-button>-->
+<!--          <el-button size="mini" type="primary">取消</el-button>-->
+<!--        </div>-->
+<!--      </div>-->
   </div>
 </template>
 <script>
@@ -556,16 +547,18 @@ export default {
 };
 
 </script>
-<style scoped>
+<style rel="stylesheet/scss" lang="scss">
 .el-header {
   height: 40px !important;
 }
-.el-aside {
-  /* background-color: rgb(0, 119, 255); */
-  border-right: 1px solid #ccc;
-}
 .el-footer {
   /* background-color: rgb(136, 255, 0); */
+}
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 40px;
 }
 .queryInput {
   height: 30px !important;

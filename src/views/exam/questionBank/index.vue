@@ -93,7 +93,7 @@
               <el-radio label="0" v-model="ruleForm.questType">单选题</el-radio>
               <el-radio label="1" v-model="ruleForm.questType">多选题</el-radio>
               <el-radio label="2" v-model="ruleForm.questType">判断题</el-radio>
-              <el-radio label="3" v-model="ruleForm.questType">填空题</el-radio>
+<!--              <el-radio label="3" v-model="ruleForm.questType">填空题</el-radio>-->
             </el-radio-group>
           </el-form-item>
           <!-- 题目-->
@@ -174,7 +174,7 @@
             <span v-if="scope.row.questType==='1'">多选题</span>
             <span v-else-if="scope.row.questType==='0'">单选题</span>
             <span v-else-if="scope.row.questType==='2'">判断题</span>
-            <span v-else-if="scope.row.questType==='3'">填空题</span>
+<!--            <span v-else-if="scope.row.questType==='3'">填空题</span>-->
             <span v-else>未知</span>
           </template>
         </el-table-column>
@@ -240,7 +240,7 @@
     </div>
   </div>
 </template>
-<style scope>
+<style rel="stylesheet/scss" lang="scss">
 .form {
   padding: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -351,8 +351,8 @@ export default {
         questAnalysis:"",
         correctResult:'',
         correctArray:[],
-        score:'1',
-        questDifficulty:'1',
+        score:1,
+        questDifficulty:1,
       },
       //后台查询结果集
       showQuestList:{
@@ -453,12 +453,6 @@ export default {
         questType: [
           { required: true, message: "请选择题目类型", trigger: "blur" },
         ],
-        questAnalysis : [
-          { required: true, message: '请填写解析', trigger: 'blur' }
-        ],
-        score: [
-          { required: true, message: '请输入分数', trigger: 'blur' }
-        ],
         questTitle: [
           { required: true, message: '请输入题目分类', trigger: 'blur' }
         ],
@@ -550,6 +544,8 @@ export default {
           }
           crudgQuestion.add(form).then((res) => {
             console.log(res);
+            that.dialogFormVisible = false;
+            that.resetForm('ruleForm');
             this.crud.notify('创建成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
             this.crud.toQuery()
             // that.$router.go(0);
